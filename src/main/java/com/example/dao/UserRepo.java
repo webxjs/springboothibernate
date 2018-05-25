@@ -13,4 +13,7 @@ import com.example.model.User;
 public interface UserRepo extends CrudRepository<User, String> {
 	@Query("from User")
     List<User> findAll();
+	
+	@Query("from User where id = ?1")
+	User findUserById(String id);
 }
