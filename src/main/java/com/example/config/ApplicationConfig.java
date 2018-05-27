@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -30,24 +31,31 @@ public class ApplicationConfig {
 //	@Autowired
 //	private EntityManagerFactory entityManagerFactory;
 
+	@Bean
+	public DataSourceTransactionManager transactionManager() {
+	    final DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+	    txManager.setDataSource(dataSource());
 
+	    return txManager;
+	}
+	
 	//handle error missing entityManagerFactory
 	@Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 
-        entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("entitymanager.packagesToScan"));
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        entityManagerFactory.setDataSource(dataSource());
+        entityManagerFactory.setPackagesToScan(env.getRequiredProperty("entitymanager.packagesToScan"));
+        entityManagerFactory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 
         Properties jpaProterties = new Properties();
         jpaProterties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         jpaProterties.put("hibernate.format_sql", env.getRequiredProperty("hibernate.format_sql"));
         jpaProterties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
 
-        entityManagerFactoryBean.setJpaProperties(jpaProterties);
+        entityManagerFactory.setJpaProperties(jpaProterties);
 
-        return entityManagerFactoryBean;
+        return entityManagerFactory;
     }
 
 	@Bean

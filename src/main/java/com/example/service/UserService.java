@@ -19,6 +19,7 @@ public class UserService {
 		return userRepo.findAll();
 	}
 	
+	@Transactional()
 	public User findUserById(String id) {
 		return userRepo.findUserById(id);
 	}
