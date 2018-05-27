@@ -17,8 +17,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value = "/hibernate/ex", method = RequestMethod.GET)
+	public String ex() {
+		return "123";
+	}
+	
 	@RequestMapping(value = "/hibernate/users", method = RequestMethod.GET)
-	public List<User> getUser() {
+	public List<User> getUsers() {
 		return userService.getUsers();
 	}
 	
