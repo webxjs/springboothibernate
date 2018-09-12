@@ -49,15 +49,15 @@ public class UserControllerTest2 {
 
     @Test
     public void testUsers_hibernate_users() throws Exception {
-    	when(userService.getUsers()).thenReturn(new ArrayList<User>() {{
-    		add(new User() {{
-    			id = "id";
-    			name = "xyz";
-    		}});
-    	}});
-    	this.mvc.perform(get("/hibernate/users")).andDo(print()).andExpect(status().isOk())
-    	.andExpect(jsonPath("$.size()", is(1)))
-    	.andExpect(jsonPath("$[0].name", is("xyz")))
-    	.andExpect(jsonPath("$[0].id", is("id")));
+	    	when(userService.getUsers()).thenReturn(new ArrayList<User>() {{
+	    		add(new User() {{
+	    			id = "id";
+	    			name = "xyz";
+	    		}});
+	    	}});
+	    	this.mvc.perform(get("/hibernate/users")).andDo(print()).andExpect(status().isOk())
+	    	.andExpect(jsonPath("$.size()", is(1)))
+	    	.andExpect(jsonPath("$[0].name", is("xyz")))
+	    	.andExpect(jsonPath("$[0].id", is("id")));
     }
 }

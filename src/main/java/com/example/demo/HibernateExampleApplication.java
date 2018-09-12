@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("com.example")
-
 public class HibernateExampleApplication {
 
 	public static void main(String[] args) {
